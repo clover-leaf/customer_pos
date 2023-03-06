@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos/app/app.dart';
 import 'package:pos/gen/fonts.gen.dart';
 import 'package:pos/home/view/home_page.dart';
-import 'package:pos/l10n/l10n.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class App extends StatefulWidget {
@@ -54,8 +53,6 @@ class AppView extends StatelessWidget {
         fontFamily: FontFamily.poppins,
         useMaterial3: true,
       ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
       home: const HomePage(),
     );
   }
