@@ -84,6 +84,11 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     final newDeliveryDishes = event.invoiceDishes
         .where((dish) => myInvoiceIds.contains(dish.invoiceId))
         .toList();
+
+    if (newDeliveryDishes.isNotEmpty) {
+      _clientRepository.updateShouldNotifyDelivery(shouldNotify: true);
+    }
+
     final updateDeliveryDishes = [
       ...state.deliveryDishes,
       ...newDeliveryDishes

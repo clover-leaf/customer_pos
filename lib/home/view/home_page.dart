@@ -10,6 +10,7 @@ import 'package:pos/menu/bloc/menu_bloc.dart';
 import 'package:pos/menu/view/menu_view.dart';
 import 'package:pos/order/bloc/order_bloc.dart';
 import 'package:pos/order/view/order_view.dart';
+import 'package:pos/utils/show_notification.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -19,7 +20,9 @@ class HomePage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => HomeCubit(),
+          create: (_) => HomeBloc(
+            clientRepository: context.read<ClientRepository>(),
+          )..add(const Subscribe()),
         ),
         BlocProvider(
           lazy: false,
@@ -36,20 +39,57 @@ class HomePage extends StatelessWidget {
           )..add(const StartOrder()),
         ),
       ],
-      child: HomeView(),
+      child: const HomeMediator(),
     );
   }
 }
 
-class HomeView extends StatelessWidget {
-  HomeView({super.key});
-
-  final menuPage = const MenuView();
-  final orderPage = const OrderView();
+class HomeMediator extends StatelessWidget {
+  const HomeMediator({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final selectTab = context.select((HomeCubit cubit) => cubit.state.tab);
+    final shouldNotify =
+        context.select((HomeBloc cubit) => cubit.state.isShowDeliveryNotify);
+
+    return HomeView(shouldNotify: shouldNotify.should);
+  }
+}
+
+class HomeView extends StatefulWidget {
+  HomeView({super.key, required this.shouldNotify});
+
+  final bool shouldNotify;
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final menuPage = const MenuView();
+
+  final orderPage = const OrderView();
+
+  @override
+  void didUpdateWidget(covariant HomeView oldWidget) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.shouldNotify) {
+        buildNotification(
+          title: 'Delivery',
+          description: 'Dishes are deliveried!',
+          iconData: Icons.check,
+        ).show(context);
+      }
+    });
+
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectTab = context.select((HomeBloc cubit) => cubit.state.tab);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

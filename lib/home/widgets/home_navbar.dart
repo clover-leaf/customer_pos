@@ -131,7 +131,7 @@ class LogoText extends StatelessWidget {
             style: GoogleFonts.sriracha(
               fontSize: 24,
               color: ColorName.blue800,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -156,7 +156,7 @@ class TableIDText extends StatelessWidget {
             style: const TextStyle(
               fontSize: 11,
               color: ColorName.text100,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ),
@@ -179,7 +179,7 @@ class NavbarLabel extends StatelessWidget {
             label,
             style: const TextStyle(
               fontSize: 11,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
               color: ColorName.text100,
             ),
           ),

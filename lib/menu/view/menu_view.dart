@@ -113,7 +113,7 @@ class Cart extends StatelessWidget {
                       itemBuilder: (context, index) {
                         return InvoiceDishCard(invoiceDishes[index]);
                       },
-                      separatorBuilder: (_, __) => const SizedBox(height: 8),
+                      separatorBuilder: (_, __) => const SizedBox(height: 12),
                     ),
                   ),
                 if (invoiceDishes.isNotEmpty) const CostLabel()
@@ -264,12 +264,11 @@ class CheckOutButton extends StatelessWidget {
         onPressed: isEnable
             ? () {
                 context.read<MenuBloc>().add(const CheckOut());
-                showNotification(
-                  context,
+                buildNotification(
                   title: 'order successfully',
                   description: 'Your order will be delivered shortly.',
                   iconData: Icons.check,
-                );
+                ).show(context);
               }
             : null,
         child: const Padding(

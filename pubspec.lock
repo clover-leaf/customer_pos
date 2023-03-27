@@ -182,7 +182,7 @@ packages:
     description:
       path: "."
       ref: master
-      resolved-ref: ec668a75ac17b8fd734278e60822f13cc8e6c15c
+      resolved-ref: "5a0d85df33851ec934d9bb80a8345635bd720e4d"
       url: "https://github.com/clover-leaf/pos_client_repository.git"
     source: git
     version: "1.0.0"
@@ -1155,10 +1155,10 @@ packages:
     dependency: "direct main"
     description:
       name: web_socket_client
-      sha256: f04dc0c81f794cd23fb5bc08bc3547c28646b582b2c5053040c640ed822fc406
+      sha256: c58378b2374622c43abfb0a29dce1a9418f95e1dddbf7fdd695a8c34b01eb737
       url: "https://pub.dev"
     source: hosted
-    version: "0.1.0-dev.2"
+    version: "0.1.0-dev.3"
   webkit_inspection_protocol:
     dependency: transitive
     description:

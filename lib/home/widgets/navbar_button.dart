@@ -32,7 +32,7 @@ class NavbarButton extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         onPressed?.call();
-        context.read<HomeCubit>().setTab(tab);
+        context.read<HomeBloc>().add(ChangeTab(tab));
       },
       behavior: HitTestBehavior.opaque,
       child: Row(
@@ -85,7 +85,7 @@ class NavbarButton extends StatelessWidget {
                         tab.value,
                         style: const TextStyle(
                           fontSize: 13,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     )
@@ -94,7 +94,7 @@ class NavbarButton extends StatelessWidget {
                       tab.value,
                       style: TextStyle(
                         fontSize: 13,
-                        fontWeight: FontWeight.w600,
+                        fontWeight: FontWeight.w500,
                         color: dynamicColor,
                       ),
                     ),

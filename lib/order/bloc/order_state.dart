@@ -56,7 +56,7 @@ class OrderState extends Equatable {
         prepareDishes,
         deliveryDishes,
         reviewDishes,
-        connectionStatus
+        connectionStatus,
       ];
 
   OrderState copyWith({

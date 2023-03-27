@@ -3,8 +3,7 @@ import 'package:elegant_notification/resources/arrays.dart';
 import 'package:flutter/material.dart';
 import 'package:pos/gen/colors.gen.dart';
 
-void showNotification(
-  BuildContext context, {
+ElegantNotification buildNotification({
   required String title,
   required String description,
   required IconData iconData,
@@ -25,7 +24,7 @@ void showNotification(
       style: const TextStyle(
         fontSize: 12,
         color: ColorName.blue900,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.w500,
       ),
     ),
     description: Text(
@@ -36,5 +35,5 @@ void showNotification(
         fontWeight: FontWeight.w500,
       ),
     ),
-  ).show(context);
+  );
 }

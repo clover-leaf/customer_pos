@@ -117,7 +117,6 @@ class NameAndPriceLabel extends StatelessWidget {
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
                   color: ColorName.text100,
-                  height: 1.1,
                 ),
               ),
             ),
@@ -151,27 +150,16 @@ class QuantityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final radius_ = Radius.circular(radius);
-    late final BorderRadius borderRadius;
     late final IconData iconData;
     if (isRightSide) {
-      borderRadius = BorderRadius.only(
-        topRight: radius_,
-        bottomRight: radius_,
-      );
       iconData = Icons.add;
     } else {
-      borderRadius = BorderRadius.only(
-        topLeft: radius_,
-        bottomLeft: radius_,
-      );
       iconData = Icons.remove;
     }
     return GestureDetector(
       onTap: onPressed,
       child: Container(
         padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(borderRadius: borderRadius),
         child: Icon(
           iconData,
           color: Colors.white,
