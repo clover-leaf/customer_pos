@@ -5,7 +5,6 @@ import 'package:bloc/bloc.dart';
 import 'package:client_repository/client_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pos/utils/utils.dart';
-import 'package:pos_server/pos_server.dart';
 
 part 'menu_event.dart';
 part 'menu_state.dart';

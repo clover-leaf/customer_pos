@@ -166,7 +166,6 @@ class SvgGenImage {
       colorFilter: colorFilter,
       color: color,
       colorBlendMode: colorBlendMode,
-      clipBehavior: clipBehavior,
       cacheColorFilter: cacheColorFilter,
     );
   }

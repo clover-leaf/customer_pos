@@ -11,11 +11,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   })  : _clientRepository = clientRepository,
         super(
           HomeState(
-            isShowDeliveryNotify: const ShouldNotify(should: false),
+            shouldShowDeliveringNotify: const ShouldShowNotify(value: false),
+            shouldShowDeliveredNotify: const ShouldShowNotify(value: false),
           ),
         ) {
     on<ChangeTab>(_onChangeTab);
-    on<Subscribe>(_onSubscribe);
+    on<SubscribeDelivering>(_onSubscribeDelivering);
+    on<SubscribeDelivered>(_onSubscribeDelivered);
   }
   final ClientRepository _clientRepository;
 
@@ -23,15 +25,33 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(tab: event.tab));
   }
 
-  Future<void> _onSubscribe(Subscribe event, Emitter<HomeState> emit) async {
+  Future<void> _onSubscribeDelivering(
+    SubscribeDelivering event,
+    Emitter<HomeState> emit,
+  ) async {
     await emit.forEach<bool>(
-      _clientRepository.getShouldNotifyDelivery(),
+      _clientRepository.getShouldNotifyDelivering(),
       onData: (should) {
         // if (shouldNotify) {
         //   _clientRepository.updateShouldNotifyDelivery(shouldNotify: false);
         // }
         return state.copyWith(
-            isShowDeliveryNotify: ShouldNotify(should: should));
+          shouldShowDeliveringNotify: ShouldShowNotify(value: should),
+        );
+      },
+    );
+  }
+
+  Future<void> _onSubscribeDelivered(
+    SubscribeDelivered event,
+    Emitter<HomeState> emit,
+  ) async {
+    await emit.forEach<bool>(
+      _clientRepository.getShouldNotifyDelivered(),
+      onData: (should) {
+        return state.copyWith(
+          shouldShowDeliveredNotify: ShouldShowNotify(value: should),
+        );
       },
     );
   }

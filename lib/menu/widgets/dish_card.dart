@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:client_repository/client_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos/gen/colors.gen.dart';
 import 'package:pos/menu/bloc/menu_bloc.dart';
-import 'package:pos_server/server/server.dart';
 
 class DishCard extends StatelessWidget {
   const DishCard(this.dish, {super.key});

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:client_repository/client_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pos/gen/colors.gen.dart';
 import 'package:pos/menu/menu.dart';
 import 'package:pos/utils/utils.dart';
-import 'package:pos_server/server/server.dart';
 
 class InvoiceDishCard extends StatelessWidget {
   const InvoiceDishCard(this.invoiceDish, {super.key});

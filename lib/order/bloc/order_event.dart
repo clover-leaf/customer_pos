@@ -17,6 +17,13 @@ class ChangeStatus extends OrderEvent {
   final OrderStatus status;
 }
 
+class Review extends OrderEvent {
+  const Review({required this.dishId, required this.rating});
+
+  final String dishId;
+  final int rating;
+}
+
 class _InvoiceChange extends OrderEvent {
   const _InvoiceChange(this.invoice);
 

@@ -17,26 +17,32 @@ enum HomeTab {
 class HomeState {
   HomeState({
     this.tab = HomeTab.breakfast,
-    required this.isShowDeliveryNotify,
+    required this.shouldShowDeliveringNotify,
+    required this.shouldShowDeliveredNotify,
   });
 
   final HomeTab tab;
-  final ShouldNotify isShowDeliveryNotify;
+  final ShouldShowNotify shouldShowDeliveringNotify;
+  final ShouldShowNotify shouldShowDeliveredNotify;
 
   // @override
   // List<Object> get props => [tab, isShowDeliveryNotify];
 
   HomeState copyWith({
     HomeTab? tab,
-    ShouldNotify? isShowDeliveryNotify,
+    ShouldShowNotify? shouldShowDeliveringNotify,
+    ShouldShowNotify? shouldShowDeliveredNotify,
   }) =>
       HomeState(
         tab: tab ?? this.tab,
-        isShowDeliveryNotify: isShowDeliveryNotify ?? this.isShowDeliveryNotify,
+        shouldShowDeliveringNotify:
+            shouldShowDeliveringNotify ?? this.shouldShowDeliveringNotify,
+        shouldShowDeliveredNotify:
+            shouldShowDeliveredNotify ?? this.shouldShowDeliveredNotify,
       );
 }
 
-class ShouldNotify {
-  const ShouldNotify({required this.should});
-  final bool should;
+class ShouldShowNotify {
+  const ShouldShowNotify({required this.value});
+  final bool value;
 }

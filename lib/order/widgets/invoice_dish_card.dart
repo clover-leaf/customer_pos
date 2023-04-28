@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:client_repository/client_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:pos/gen/colors.gen.dart';
 import 'package:pos/menu/menu.dart';
-import 'package:pos_server/server/server.dart';
+import 'package:pos/order/bloc/order_bloc.dart';
 
 class InvoiceDishCard extends StatelessWidget {
   const InvoiceDishCard(this.invoiceDish, {super.key});
@@ -13,41 +15,128 @@ class InvoiceDishCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dishView = context.select((MenuBloc bloc) => bloc.state.dishView);
+    final status = context.select((OrderBloc bloc) => bloc.state.status);
     final dish = dishView[invoiceDish.dishId]!;
 
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.white,
-      ),
-      child: SizedBox(
-        height: 64,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
+    if (status == OrderStatus.review) {
+      return Column(
+        children: [
+          DecoratedBox(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+            ),
+            child: SizedBox(
+              height: 64,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(8),
+                      bottomLeft: Radius.circular(8),
+                    ),
+                    child: AspectRatio(
+                      aspectRatio: 1.6,
+                      child: CachedNetworkImage(
+                        imageUrl: dish.url,
+                        fit: BoxFit.cover,
+                        placeholder: (context, _) => Container(
+                          color: ColorName.grey100,
+                        ),
+                      ),
+                    ),
+                  ),
+                  NameAndQuantityLabel(
+                    dishName: dish.name,
+                    quantity: invoiceDish.quantity,
+                  ),
+                ],
               ),
-              child: AspectRatio(
-                aspectRatio: 1.6,
-                child: CachedNetworkImage(
-                  imageUrl: dish.url,
-                  fit: BoxFit.cover,
-                  placeholder: (context, _) => Container(
-                    color: ColorName.grey100,
+            ),
+          ),
+          Rating(dishId: dish.id)
+        ],
+      );
+    } else {
+      return DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.white,
+        ),
+        child: SizedBox(
+          height: 64,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
+                ),
+                child: AspectRatio(
+                  aspectRatio: 1.6,
+                  child: CachedNetworkImage(
+                    imageUrl: dish.url,
+                    fit: BoxFit.cover,
+                    placeholder: (context, _) => Container(
+                      color: ColorName.grey100,
+                    ),
                   ),
                 ),
               ),
-            ),
-            NameAndQuantityLabel(
-              dishName: dish.name,
-              quantity: invoiceDish.quantity,
-            ),
-          ],
+              NameAndQuantityLabel(
+                dishName: dish.name,
+                quantity: invoiceDish.quantity,
+              ),
+            ],
+          ),
         ),
+      );
+    }
+  }
+}
+
+class Rating extends StatefulWidget {
+  const Rating({
+    super.key,
+    required this.dishId,
+  });
+
+  final String dishId;
+
+  @override
+  State<Rating> createState() => _RatingState();
+}
+
+class _RatingState extends State<Rating> {
+  late bool isReview;
+
+  @override
+  void initState() {
+    super.initState();
+    isReview = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RatingBar.builder(
+      minRating: 1,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+      itemBuilder: (context, _) => const Icon(
+        Icons.star,
+        color: Colors.amber,
       ),
+      ignoreGestures: isReview,
+      onRatingUpdate: (rating) {
+        setState(() {
+          isReview = true;
+        });
+        context
+            .read<OrderBloc>()
+            .add(Review(dishId: widget.dishId, rating: rating.toInt()));
+      },
+      updateOnDrag: true,
     );
   }
 }

@@ -147,12 +147,14 @@ class TableIDText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final tableNumber = context.select((MenuBloc bloc) => bloc.tableNumber);
+
     return Row(
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(24, 8, 0, 24),
           child: Text(
-            'Table Number: 3'.toUpperCase(),
+            'Table Number: $tableNumber'.toUpperCase(),
             style: const TextStyle(
               fontSize: 11,
               color: ColorName.text100,

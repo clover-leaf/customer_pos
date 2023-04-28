@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:client_repository/client_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:pos_server/pos_server.dart';
 
 part 'order_event.dart';
 part 'order_state.dart';
@@ -16,6 +15,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         super(const OrderState()) {
     on<StartOrder>(_onStart);
     on<ChangeStatus>(_onChangeStatus);
+    on<Review>(_onReview);
     on<_InvoiceChange>(_onInvoiceChange);
     on<_PrepareDishChange>(_onPrepareDishChange);
     on<_DeliveryDishChange>(_onDeliveryDishChange);
@@ -56,6 +56,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     emit(state.copyWith(status: event.status));
   }
 
+  void _onReview(Review event, Emitter<OrderState> emit) {
+    _clientRepository.review(event.dishId, event.rating);
+  }
+
   void _onInvoiceChange(_InvoiceChange event, Emitter<OrderState> emit) {
     if (event.invoice == null) return;
     if (event.invoice!.tableId == tableNumber) {
@@ -86,7 +90,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         .toList();
 
     if (newDeliveryDishes.isNotEmpty) {
-      _clientRepository.updateShouldNotifyDelivery(shouldNotify: true);
+      _clientRepository.updateShouldNotifyDelivering(shouldNotify: true);
     }
 
     final updateDeliveryDishes = [
@@ -114,6 +118,9 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
         .where((dish) => event.invoiceDishesId.contains(dish.id))
         .toList();
     final updateReviewDishes = [...state.reviewDishes, ...reviewDishes];
+    if (reviewDishes.isNotEmpty) {
+      _clientRepository.updateShouldNotifyDelivered(shouldNotify: true);
+    }
 
     final updateDeliveryDishes = List<InvoiceDish>.from(state.deliveryDishes)
       ..removeWhere((dish) => event.invoiceDishesId.contains(dish.id));

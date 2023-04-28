@@ -22,7 +22,9 @@ class HomePage extends StatelessWidget {
         BlocProvider(
           create: (_) => HomeBloc(
             clientRepository: context.read<ClientRepository>(),
-          )..add(const Subscribe()),
+          )
+            ..add(const SubscribeDelivering())
+            ..add(const SubscribeDelivered()),
         ),
         BlocProvider(
           lazy: false,
@@ -51,17 +53,27 @@ class HomeMediator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final shouldNotify =
-        context.select((HomeBloc cubit) => cubit.state.isShowDeliveryNotify);
+    final shouldShowDeliveringNotify = context
+        .select((HomeBloc bloc) => bloc.state.shouldShowDeliveringNotify);
+    final shouldShowDeliveredNotify =
+        context.select((HomeBloc bloc) => bloc.state.shouldShowDeliveredNotify);
 
-    return HomeView(shouldNotify: shouldNotify.should);
+    return HomeView(
+      shouldShowDeliveringNotify: shouldShowDeliveringNotify.value,
+      shouldShowDeliveredNotify: shouldShowDeliveredNotify.value,
+    );
   }
 }
 
 class HomeView extends StatefulWidget {
-  HomeView({super.key, required this.shouldNotify});
+  HomeView({
+    super.key,
+    required this.shouldShowDeliveringNotify,
+    required this.shouldShowDeliveredNotify,
+  });
 
-  final bool shouldNotify;
+  final bool shouldShowDeliveringNotify;
+  final bool shouldShowDeliveredNotify;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -75,10 +87,16 @@ class _HomeViewState extends State<HomeView> {
   @override
   void didUpdateWidget(covariant HomeView oldWidget) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.shouldNotify) {
+      if (widget.shouldShowDeliveringNotify) {
         buildNotification(
-          title: 'Delivery',
-          description: 'Dishes are deliveried!',
+          title: 'Delivering',
+          description: 'Dishes are being delivering!',
+          iconData: Icons.check,
+        ).show(context);
+      } else if (widget.shouldShowDeliveredNotify) {
+        buildNotification(
+          title: 'Delivered',
+          description: 'Dishes are delivered!',
           iconData: Icons.check,
         ).show(context);
       }

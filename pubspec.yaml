@@ -21,13 +21,10 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
+  flutter_rating_bar: ^4.0.1
   flutter_svg: ^2.0.2
   google_fonts: ^4.0.3
   intl: ^0.17.0
-  pos_server:
-    git:
-      url: https://github.com/clover-leaf/pos_server.git
-      ref: master
   shared_preferences: ^2.0.18
   simple_gradient_text: ^1.2.4
   web_socket_client: ^0.1.0-dev.2

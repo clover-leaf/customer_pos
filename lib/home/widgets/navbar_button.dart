@@ -68,7 +68,7 @@ class NavbarButton extends StatelessWidget {
                       badgeStyle: badges.BadgeStyle(
                         badgeColor: dynamicColor,
                         elevation: 0,
-                        padding: const EdgeInsets.all(6),
+                        // padding: const EdgeInsets.all(6),
                       ),
                       badgeContent: Text(
                         '$badgeNumber',

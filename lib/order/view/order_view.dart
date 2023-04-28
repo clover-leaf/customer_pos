@@ -1,9 +1,9 @@
+import 'package:client_repository/client_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:pos/gen/colors.gen.dart';
 import 'package:pos/order/order.dart';
-import 'package:pos_server/pos_server.dart';
 
 class OrderView extends StatelessWidget {
   const OrderView({super.key});

@@ -13,6 +13,10 @@ class ChangeTab extends HomeEvent {
   final HomeTab tab;
 }
 
-class Subscribe extends HomeEvent {
-  const Subscribe();
+class SubscribeDelivering extends HomeEvent {
+  const SubscribeDelivering();
+}
+
+class SubscribeDelivered extends HomeEvent {
+  const SubscribeDelivered();
 }
