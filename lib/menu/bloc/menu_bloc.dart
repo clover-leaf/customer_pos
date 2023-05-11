@@ -24,6 +24,7 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
 
   final ClientRepository _clientRepository;
   final int tableNumber;
+  late final String tableRfid;
 
   Future<void> _onStart(StartMenu event, Emitter<MenuState> emit) async {
     if (state.status.isSuccess()) return;
@@ -31,6 +32,11 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
       final res = await _clientRepository.requestMenu();
       final categories = fromJson(Category.fromJson, res['category']);
       final dishes = fromJson(Dish.fromJson, res['dish']);
+
+      final resRfid = await _clientRepository.getRfid();
+      tableRfid = ((resRfid['rfid'] as List<dynamic>).firstWhere(
+        (ele) => (ele as Map<String, dynamic>)['id'] == tableNumber,
+      ) as Map<String, dynamic>)['rfid'] as String;
 
       emit(
         state.copyWith(
@@ -52,7 +58,11 @@ class MenuBloc extends Bloc<MenuEvent, MenuState> {
 
   void _onAddToOrder(AddToOrder event, Emitter<MenuState> emit) {
     if (state.invoice == null) {
-      final invoice = Invoice(tableId: tableNumber, time: DateTime.now());
+      final invoice = Invoice(
+        tableId: tableNumber,
+        tableRfid: tableRfid,
+        time: DateTime.now(),
+      );
       final invoiceDish =
           InvoiceDish(invoiceId: invoice.id, dishId: event.dishId, quantity: 1);
       emit(

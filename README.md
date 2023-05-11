@@ -25,7 +25,10 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 
 # Production
 $ flutter run --flavor production --target lib/main_production.dart
+
+flt build windows --target lib/main_development.dart
 ```
+
 
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html

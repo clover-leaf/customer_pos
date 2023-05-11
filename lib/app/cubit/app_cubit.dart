@@ -7,12 +7,12 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit({required SharedPreferences prefs})
       : _prefs = prefs,
-        super(const AppState(tableNumber: 0));
+        super(const AppState(tableNumber: 2));
 
   final SharedPreferences _prefs;
 
   Future<void> initial() async {
-    final tableNumber = _prefs.getInt('tableNumber') ?? 0;
+    final tableNumber = _prefs.getInt('tableNumber') ?? 1;
     emit(state.copyWith(tableNumber: tableNumber));
   }
 
