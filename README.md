@@ -2,7 +2,7 @@
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
 [![License: MIT][license_badge]][license_link]
 
-A customer POS built with Flutter
+A window app for restaurant POS built with flutter and dart_frog. Using websocket protocol to update order status between customer app, kitchen app and server.
 
 ---
 
@@ -29,6 +29,10 @@ $ flutter run --flavor production --target lib/main_production.dart
 flt build windows --target lib/main_development.dart
 ```
 
+## Screenshot
+![Screenshot](./screenshot/dat%20mon.png)
+![Screenshot](./screenshot/dat%20mon%20thanh%20cong.png)
+![Screenshot](./screenshot/review.png)
 
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html

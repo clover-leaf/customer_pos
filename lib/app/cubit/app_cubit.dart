@@ -7,7 +7,7 @@ part 'app_state.dart';
 class AppCubit extends Cubit<AppState> {
   AppCubit({required SharedPreferences prefs})
       : _prefs = prefs,
-        super(const AppState(tableNumber: 2));
+        super(const AppState(tableNumber: 1));
 
   final SharedPreferences _prefs;
 

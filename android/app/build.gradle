@@ -79,7 +79,7 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Pos"]
+            manifestPlaceholders = [appName: "Customer POS 1"]
         }
         staging {
             dimension "default"
