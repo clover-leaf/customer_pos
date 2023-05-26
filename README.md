@@ -29,10 +29,10 @@ $ flutter run --flavor production --target lib/main_production.dart
 flt build windows --target lib/main_development.dart
 ```
 
-## Screenshot
+<!-- ## Screenshot
 ![Screenshot](./screenshot/dat%20mon.png)
-![Screenshot](./screenshot/dat%20mon%20thanh%20cong.png)
-![Screenshot](./screenshot/review.png)
+![Screenshot](./screenshot/dat%20mon%20thanh%20cong.png) -->
+<!-- ![Screenshot](./screenshot/review.png) -->
 
 [coverage_badge]: coverage_badge.svg
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
